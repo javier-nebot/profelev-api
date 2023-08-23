@@ -9,3 +9,113 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// prisma/schema.prisma
+
+model Prof {
+  id             Int      @id @unique @default(autoincrement())
+  nom            String
+  prenom         String
+  diplome        String
+  age            Int  
+  telephone      String   @unique
+  mail           String   @unique
+  adresse        String
+  lat            Int
+  long           Int
+  Enseigner      Enseigner[]
+  Maitriser      Maitriser[]
+  Contacter      Contacter[]
+  localisation   Localisation[]
+  idLocalisation Int
+}
+
+
+model Tuteur {
+  id             Int      @id @unique @default(autoincrement())
+  nom            String
+  prenom         String  
+  telephone      String   @unique
+  mail           String   @unique
+  adresse        String
+  relationEleve  String
+  lat            Int
+  long           Int
+  Solliciter     Solliciter[]
+  Contacter      Contacter[]
+  eleve          Eleve[]
+  localisation   Localisation[]
+  idLocalisation Int
+}
+
+model Eleve {
+  id             Int      @id @unique @default(autoincrement())
+  nom            String
+  prenom         String  
+  age            Int
+  Enseigner      Enseigner[]
+  tuteur         Tuteur @relation(fields: [idTuteur], references: [id])
+  idTuteur       Int
+}
+
+model Matiere {
+  id            Int      @id @unique @default(autoincrement())
+  matiere       String
+  cours         String
+  Solliciter    Solliciter[]
+  Enseigner     Enseigner[]
+  Maitriser     Maitriser[]
+}
+
+model Localisation {
+  id             Int      @id @unique @default(autoincrement())
+  adresse        String
+  ville          String  
+  departement    String   @unique
+  codePostal     String   @unique
+  lat            Int
+  long           Int
+  tuteur         Tuteur @relation(fields: [idTuteur], references: [id])
+  idTuteur       Int
+  prof           Prof @relation(fields: [idProf], references: [id])
+  idProf         Int
+}
+
+model Solliciter {
+  tuteur         Tuteur   @relation(fields: [idTuteur], references: [id])
+  idTuteur       Int
+  matiere        Matiere  @relation(fields: [idMatiere], references: [id])
+  idMatiere      Int
+
+  @@id([idTuteur, idMatiere])
+}
+
+model Enseigner {
+  prof       Prof @relation(fields: [idProf], references: [id])
+  idProf     Int
+  eleve      Eleve @relation(fields: [idEleve], references: [id])
+  idEleve    Int
+  matiere    Matiere @relation(fields: [idMatiere], references: [id])
+  idMatiere  Int
+  rendezvous DateTime
+
+  @@id([idProf, idEleve, idMatiere])
+}
+
+model Maitriser {
+  prof       Prof @relation(fields: [idProf], references: [id])
+  idProf     Int
+  matiere    Matiere @relation(fields: [idMatiere], references: [id])
+  idMatiere  Int
+
+  @@id([idProf, idMatiere])
+}
+
+model Contacter {
+  prof       Prof @relation(fields: [idProf], references: [id])
+  idProf     Int
+  tuteur     Tuteur @relation(fields: [idTuteur], references: [id])
+  idTuteur   Int
+
+  @@id([idProf, idTuteur])
+}

@@ -34,6 +34,23 @@ $ npm install
 
 ## Running the app
 
+- First, start the dockerized postgresql database with :
+
+```bash
+$ docker-compose up
+```
+
+- Run migrate to create tables
+
+```bash
+$ npm run migrate
+```
+
+- Seed the database with :
+```bash
+$ npm run seed
+```
+
 ```bash
 # development
 $ npm run start
@@ -43,6 +60,20 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+
+! Each change done on the database/prisma need a:
+
+```bash
+npx prisma generate
+```
+
+to keep the node_modules up to date and the app working in dev mode!
+
+To acces to a dev friendly interface to the psql database, use:
+
+```bash
+$ npx prisma studio
 ```
 
 ## Test
@@ -58,6 +89,19 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Swagger
+
+You have accesto the swagger at the URL below:
+
+http://localhost:4000/api
+
+
+## Database Schema
+
+If you want to have a look at the database tables schema:
+
+1. Copy all that's inside the /prisma/dbml/schema.dbml file.
+2. Go to http://dbdiagram.io/d and paste it there.
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
