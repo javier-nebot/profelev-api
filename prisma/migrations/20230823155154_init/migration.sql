@@ -6,10 +6,8 @@ CREATE TABLE "Prof" (
     "diplome" TEXT NOT NULL,
     "age" INTEGER NOT NULL,
     "telephone" TEXT NOT NULL,
-    "mail" TEXT NOT NULL,
-    "adresse" TEXT NOT NULL,
-    "lat" INTEGER NOT NULL,
-    "long" INTEGER NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "idLocalisation" INTEGER NOT NULL,
 
     CONSTRAINT "Prof_pkey" PRIMARY KEY ("id")
@@ -21,11 +19,9 @@ CREATE TABLE "Tuteur" (
     "nom" TEXT NOT NULL,
     "prenom" TEXT NOT NULL,
     "telephone" TEXT NOT NULL,
-    "mail" TEXT NOT NULL,
-    "adresse" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "relationEleve" TEXT NOT NULL,
-    "lat" INTEGER NOT NULL,
-    "long" INTEGER NOT NULL,
     "idLocalisation" INTEGER NOT NULL,
 
     CONSTRAINT "Tuteur_pkey" PRIMARY KEY ("id")
@@ -107,7 +103,7 @@ CREATE UNIQUE INDEX "Prof_id_key" ON "Prof"("id");
 CREATE UNIQUE INDEX "Prof_telephone_key" ON "Prof"("telephone");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Prof_mail_key" ON "Prof"("mail");
+CREATE UNIQUE INDEX "Prof_email_key" ON "Prof"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Tuteur_id_key" ON "Tuteur"("id");
@@ -116,7 +112,7 @@ CREATE UNIQUE INDEX "Tuteur_id_key" ON "Tuteur"("id");
 CREATE UNIQUE INDEX "Tuteur_telephone_key" ON "Tuteur"("telephone");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Tuteur_mail_key" ON "Tuteur"("mail");
+CREATE UNIQUE INDEX "Tuteur_email_key" ON "Tuteur"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Eleve_id_key" ON "Eleve"("id");

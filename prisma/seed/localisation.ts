@@ -1,0 +1,58 @@
+const localisations = [
+	{
+		id: 1,
+		adresse: '12, Pl du Capitole',
+		ville: 'Toulouse',
+		departement: 'Haute-Garonne',
+		codePostal: '31000',
+		lat: 43.6045,
+		long: 1.4428,
+	},
+	{
+		id: 2,
+		adresse: '12, Pl du Capitole',
+		ville: 'Toulouse',
+		departement: 'Haute-Garonne',
+		codePostal: '31000',
+		lat: 43.6045,
+		long: 1.4428,
+	},
+	{
+		id: 3,
+		adresse: '12, Pl du Capitole',
+		ville: 'Toulouse',
+		departement: 'Haute-Garonne',
+		codePostal: '31000',
+		lat: 43.6045,
+		long: 1.4428,
+	},
+	{
+		id: 4,
+		adresse: '12, Pl du Capitole',
+		ville: 'Toulouse',
+		departement: 'Haute-Garonne',
+		codePostal: '31000',
+		lat: 43.6045,
+		long: 1.4428,
+	},
+	{
+		id: 5,
+		adresse: '12, Pl du Capitole',
+		ville: 'Toulouse',
+		departement: 'Haute-Garonne',
+		codePostal: '31000',
+		lat: 43.6045,
+		long: 1.4428,
+	},
+	{
+		id: 6,
+		adresse: '12, Pl du Capitole',
+		ville: 'Toulouse',
+		departement: 'Haute-Garonne',
+		codePostal: '31000',
+		lat: 43.6045,
+		long: 1.4428,
+	},
+];
+
+export default localisations;

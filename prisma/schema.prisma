@@ -19,10 +19,8 @@ model Prof {
   diplome        String
   age            Int  
   telephone      String   @unique
-  mail           String   @unique
-  adresse        String
-  lat            Int
-  long           Int
+  email          String   @unique
+  password       String
   Enseigner      Enseigner[]
   Maitriser      Maitriser[]
   Contacter      Contacter[]
@@ -36,11 +34,9 @@ model Tuteur {
   nom            String
   prenom         String  
   telephone      String   @unique
-  mail           String   @unique
-  adresse        String
+  email          String   @unique
+  password       String
   relationEleve  String
-  lat            Int
-  long           Int
   Solliciter     Solliciter[]
   Contacter      Contacter[]
   eleve          Eleve[]
