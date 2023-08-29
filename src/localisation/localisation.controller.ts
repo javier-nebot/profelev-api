@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { LocalisationService } from './localisation.service';
 import { CreateLocalisationDto } from './dto/create-localisation.dto';
 import { UpdateLocalisationDto } from './dto/update-localisation.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('localisation')
+@ApiTags('Localisation')
 export class LocalisationController {
   constructor(private readonly localisationService: LocalisationService) {}
 

@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { MatiereService } from './matiere.service';
 import { CreateMatiereDto } from './dto/create-matiere.dto';
 import { UpdateMatiereDto } from './dto/update-matiere.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('matiere')
+@ApiTags('Matiere')
 export class MatiereController {
   constructor(private readonly matiereService: MatiereService) {}
 

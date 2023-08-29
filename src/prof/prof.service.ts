@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProfDto } from './dto/create-prof.dto';
 import { UpdateProfDto } from './dto/update-prof.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ProfService {
+  constructor(private prisma: PrismaService) {}
+
   create(createProfDto: CreateProfDto) {
-    return 'This action adds a new prof';
+    return this.prisma.prof.create({ data: createProfDto});
   }
 
   findAll() {
-    return `This action returns all prof`;
+    return  this.prisma.prof.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} prof`;
+    return this.prisma.prof.findUnique({ where: { id }});
   }
 
   update(id: number, updateProfDto: UpdateProfDto) {
-    return `This action updates a #${id} prof`;
+    return this.prisma.prof.update({
+      where: { id },
+      data: updateProfDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} prof`;
+    return this.prisma.prof.delete({ where: { id }});
   }
 }
