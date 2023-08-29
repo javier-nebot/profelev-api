@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { ProfService } from './prof.service';
 import { CreateProfDto } from './dto/create-prof.dto';
 import { UpdateProfDto } from './dto/update-prof.dto';
@@ -24,19 +24,19 @@ export class ProfController {
 
   @Get(':id')
   @ApiOkResponse({ type: ProfEntity })
-  findOne(@Param('id') id: string) {
-    return this.profService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.profService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOkResponse({ type: ProfEntity })
-  update(@Param('id') id: string, @Body() updateProfDto: UpdateProfDto) {
-    return this.profService.update(+id, updateProfDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateProfDto: UpdateProfDto) {
+    return this.profService.update(id, updateProfDto);
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: ProfEntity })
-  remove(@Param('id') id: string) {
-    return this.profService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.profService.remove(id);
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { TuteurService } from './tuteur.service';
 import { CreateTuteurDto } from './dto/create-tuteur.dto';
 import { UpdateTuteurDto } from './dto/update-tuteur.dto';
@@ -24,19 +24,19 @@ export class TuteurController {
 
   @Get(':id')
   @ApiOkResponse({ type: TuteurEntity})
-  findOne(@Param('id') id: string) {
-    return this.tuteurService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.tuteurService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOkResponse({ type: TuteurEntity})
-  update(@Param('id') id: string, @Body() updateTuteurDto: UpdateTuteurDto) {
-    return this.tuteurService.update(+id, updateTuteurDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateTuteurDto: UpdateTuteurDto) {
+    return this.tuteurService.update(id, updateTuteurDto);
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: TuteurEntity})
-  remove(@Param('id') id: string) {
-    return this.tuteurService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.tuteurService.remove(id);
   }
 }
