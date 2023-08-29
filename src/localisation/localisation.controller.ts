@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { LocalisationService } from './localisation.service';
 import { CreateLocalisationDto } from './dto/create-localisation.dto';
 import { UpdateLocalisationDto } from './dto/update-localisation.dto';
@@ -24,8 +24,12 @@ export class LocalisationController {
 
   @Get(':id')
   @ApiOkResponse({ type: LocalisationEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.localisationService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const localisation = await this.localisationService.findOne(id);
+    if(!localisation) {
+      throw new NotFoundException(`Localisation avec id ${id} n'existe pas`)
+    }
+    return localisation;
   }
 
   @Patch(':id')

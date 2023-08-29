@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { ProfService } from './prof.service';
 import { CreateProfDto } from './dto/create-prof.dto';
 import { UpdateProfDto } from './dto/update-prof.dto';
@@ -24,8 +24,12 @@ export class ProfController {
 
   @Get(':id')
   @ApiOkResponse({ type: ProfEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.profService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const prof = await this.profService.findOne(id);
+    if (!prof) {
+      throw new NotFoundException(`Prof avec id ${id} n'existe pas.`)
+    }
+    return prof;
   }
 
   @Patch(':id')

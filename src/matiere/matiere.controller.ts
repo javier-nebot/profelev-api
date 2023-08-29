@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { MatiereService } from './matiere.service';
 import { CreateMatiereDto } from './dto/create-matiere.dto';
 import { UpdateMatiereDto } from './dto/update-matiere.dto';
@@ -24,7 +24,11 @@ export class MatiereController {
 
   @Get(':id')
   @ApiOkResponse({ type: MatiereEntity})
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const matiere = await this.matiereService.findOne(id);
+    if(!matiere) {
+      throw new NotFoundException(`Matiere avec id ${id} nèxiste pas`)
+    }
     return this.matiereService.findOne(id);
   }
 
