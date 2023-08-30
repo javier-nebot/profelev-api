@@ -33,7 +33,7 @@ export class LocalisationController {
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: LocalisationEntity })
+  @ApiCreatedResponse({ type: LocalisationEntity })
   update(@Param('id', ParseIntPipe) id: number, @Body() updateLocalisationDto: UpdateLocalisationDto) {
     return this.localisationService.update(id, updateLocalisationDto);
   }

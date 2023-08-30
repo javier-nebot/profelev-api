@@ -13,20 +13,21 @@ export class TuteurController {
 
   @Post()
   @ApiCreatedResponse({ type: TuteurEntity })
-  create(@Body() createTuteurDto: CreateTuteurDto) {
-    return this.tuteurService.create(createTuteurDto);
+  async create(@Body() createTuteurDto: CreateTuteurDto) {
+    return new TuteurEntity(await this.tuteurService.create(createTuteurDto));
   }
 
   @Get()
   @ApiOkResponse({ type: TuteurEntity})
-  findAll() {
-    return this.tuteurService.findAll();
+  async findAll() {
+    const tuteur = await this.tuteurService.findAll();
+    return tuteur.map((tuteur) => new TuteurEntity(tuteur));
   }
 
   @Get(':id')
   @ApiOkResponse({ type: TuteurEntity})
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const tuteur = await this.tuteurService.findOne(id);
+    const tuteur = new TuteurEntity(await this.tuteurService.findOne(id));
     if(!tuteur) {
       throw new NotFoundException(`Tuteur avec id ${id} n'existe pas.`)
     }
@@ -34,14 +35,14 @@ export class TuteurController {
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: TuteurEntity})
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateTuteurDto: UpdateTuteurDto) {
-    return this.tuteurService.update(id, updateTuteurDto);
+  @ApiCreatedResponse({ type: TuteurEntity})
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateTuteurDto: UpdateTuteurDto) {
+    return new TuteurEntity( await this.tuteurService.update(id, updateTuteurDto));
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: TuteurEntity})
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.tuteurService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return new TuteurEntity(await this.tuteurService.remove(id));
   }
 }

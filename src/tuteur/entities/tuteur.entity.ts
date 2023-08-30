@@ -1,7 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Tuteur } from "@prisma/client";
+import { Exclude } from "class-transformer";
 
 export class  TuteurEntity implements Tuteur {
+    constructor(partial: Partial<TuteurEntity>) {
+        Object.assign(this, partial);
+    }
+
     @ApiProperty()
     id: number;
 
@@ -17,7 +22,7 @@ export class  TuteurEntity implements Tuteur {
     @ApiProperty()
     email: string;
 
-    @ApiProperty()
+    @Exclude()
     password: string;
 
     @ApiProperty()

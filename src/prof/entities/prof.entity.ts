@@ -1,7 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Prof } from "@prisma/client";
+import { Exclude } from "class-transformer";
 
 export class ProfEntity implements Prof {
+    constructor(partial: Partial<ProfEntity>) {
+        Object.assign(this, partial);
+    }
+    
     @ApiProperty()
     id: number;
 
@@ -23,7 +28,7 @@ export class ProfEntity implements Prof {
     @ApiProperty()
     email: string;
 
-    @ApiProperty()
+    @Exclude()
     password: string;
 
     @ApiProperty()

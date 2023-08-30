@@ -33,7 +33,7 @@ export class MatiereController {
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: MatiereEntity})
+  @ApiCreatedResponse({ type: MatiereEntity})
   update(@Param('id', ParseIntPipe) id: number, @Body() updateMatiereDto: UpdateMatiereDto) {
     return this.matiereService.update(id, updateMatiereDto);
   }

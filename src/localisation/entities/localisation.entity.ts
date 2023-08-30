@@ -23,9 +23,9 @@ export class LocalisationEntity implements Localisation {
     @ApiProperty()
     long: number;
 
-    @ApiProperty()
-    idTuteur: number;
+    @ApiProperty({ required: false, nullable: true })
+    idTuteur: number | null;
 
-    @ApiProperty()
-    idProf: number;
+    @ApiProperty({ required: false, nullable: true })
+    idProf: number | null;
 }

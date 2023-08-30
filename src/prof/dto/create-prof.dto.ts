@@ -1,13 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsPhoneNumber } from "class-validator";
+import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from "class-validator";
 
 export class CreateProfDto {
-    
+    @IsString()
     @IsNotEmpty()
     @ApiProperty()
     nom: string;
 
-    
+    @IsString()
     @IsNotEmpty()
     @ApiProperty()
     prenom: string;

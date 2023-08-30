@@ -12,20 +12,21 @@ export class ProfController {
 
   @Post()
   @ApiCreatedResponse({ type: ProfEntity })
-  create(@Body() createProfDto: CreateProfDto) {
-    return this.profService.create(createProfDto);
+  async create(@Body() createProfDto: CreateProfDto) {
+    return new ProfEntity( await this.profService.create(createProfDto));
   }
 
   @Get()
   @ApiOkResponse({ type: ProfEntity })
-  findAll() {
-    return this.profService.findAll();
+  async findAll() {
+    const prof = await this.profService.findAll();
+    return prof.map((prof) => new ProfEntity(prof));
   }
 
   @Get(':id')
   @ApiOkResponse({ type: ProfEntity })
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const prof = await this.profService.findOne(id);
+    const prof = new ProfEntity(await this.profService.findOne(id));
     if (!prof) {
       throw new NotFoundException(`Prof avec id ${id} n'existe pas.`)
     }
@@ -33,14 +34,14 @@ export class ProfController {
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: ProfEntity })
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateProfDto: UpdateProfDto) {
-    return this.profService.update(id, updateProfDto);
+  @ApiCreatedResponse({ type: ProfEntity })
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateProfDto: UpdateProfDto) {
+    return new ProfEntity(await this.profService.update(id, updateProfDto));
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: ProfEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.profService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return new ProfEntity(await this.profService.remove(id));
   }
 }

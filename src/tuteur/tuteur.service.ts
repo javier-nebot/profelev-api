@@ -16,7 +16,11 @@ export class TuteurService {
   }
 
   findOne(id: number) {
-    return this.prisma.tuteur.findUnique({ where: { id }});
+    return this.prisma.tuteur.findUnique({
+      where: { id },
+      include: {
+        eleve: true,
+      }});
   }
 
   update(id: number, updateTuteurDto: UpdateTuteurDto) {
