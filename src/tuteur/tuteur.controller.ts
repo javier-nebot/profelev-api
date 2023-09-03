@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, NotFoundException, UseGuards } from '@nestjs/common';
 import { TuteurService } from './tuteur.service';
 import { CreateTuteurDto } from './dto/create-tuteur.dto';
 import { UpdateTuteurDto } from './dto/update-tuteur.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { TuteurEntity } from './entities/tuteur.entity';
 import { NotFoundError } from 'rxjs';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('tuteur')
 @ApiTags('Tuteur')
@@ -18,6 +19,7 @@ export class TuteurController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: TuteurEntity})
   async findAll() {
     const tuteur = await this.tuteurService.findAll();
@@ -25,6 +27,7 @@ export class TuteurController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: TuteurEntity})
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const tuteur = new TuteurEntity(await this.tuteurService.findOne(id));
@@ -35,12 +38,14 @@ export class TuteurController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: TuteurEntity})
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateTuteurDto: UpdateTuteurDto) {
     return new TuteurEntity( await this.tuteurService.update(id, updateTuteurDto));
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: TuteurEntity})
   async remove(@Param('id', ParseIntPipe) id: number) {
     return new TuteurEntity(await this.tuteurService.remove(id));

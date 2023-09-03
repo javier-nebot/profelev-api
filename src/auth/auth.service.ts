@@ -12,17 +12,13 @@ export class AuthService {
 
     async loginProf(email: string, password: string): Promise<AuthEntity> {
         const prof = await this.prisma.prof.findUnique({ where: { email: email } });
-
         if (!prof) {
             throw new NotFoundException(`No user found for email: ${email}`)
         }
-
         const isPassworValid = prof.password === password;
-
         if(!isPassworValid) {
             throw new UnauthorizedException('Invalid password');
         }
-
         return {
             accessToken: this.jwtService.sign({ userId: prof.id}),
         }
@@ -30,17 +26,13 @@ export class AuthService {
 
     async loginTuteur(email: string, password: string): Promise<AuthEntity> {
         const tuteur = await this.prisma.tuteur.findUnique({ where: { email: email } });
-
         if (!tuteur) {
             throw new NotFoundException(`No user found for email: ${email}`)
         }
-
         const isPassworValid = tuteur.password === password;
-
         if(!isPassworValid) {
             throw new UnauthorizedException('Invalid password');
         }
-
         return {
             accessToken: this.jwtService.sign({ userId: tuteur.id}),
         }
