@@ -31,6 +31,6 @@ export class ProfEntity implements Prof {
     @Exclude()
     password: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: false })
     idLocalisation: number;
 }

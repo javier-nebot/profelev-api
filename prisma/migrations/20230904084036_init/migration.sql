@@ -8,7 +8,6 @@ CREATE TABLE "Prof" (
     "telephone" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "idLocalisation" INTEGER NOT NULL,
 
     CONSTRAINT "Prof_pkey" PRIMARY KEY ("id")
 );
@@ -22,7 +21,6 @@ CREATE TABLE "Tuteur" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "relationEleve" TEXT NOT NULL,
-    "idLocalisation" INTEGER NOT NULL,
 
     CONSTRAINT "Tuteur_pkey" PRIMARY KEY ("id")
 );
@@ -128,6 +126,12 @@ CREATE UNIQUE INDEX "Localisation_departement_key" ON "Localisation"("departemen
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Localisation_codePostal_key" ON "Localisation"("codePostal");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Localisation_idTuteur_key" ON "Localisation"("idTuteur");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Localisation_idProf_key" ON "Localisation"("idProf");
 
 -- AddForeignKey
 ALTER TABLE "Eleve" ADD CONSTRAINT "Eleve_idTuteur_fkey" FOREIGN KEY ("idTuteur") REFERENCES "Tuteur"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -28,6 +28,6 @@ export class  TuteurEntity implements Tuteur {
     @ApiProperty()
     relationEleve: string;
 
-    @ApiProperty()
-    idLocalisation: number;
+    @ApiProperty({ required: false })
+    idLocalisation?: number;
 }

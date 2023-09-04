@@ -32,9 +32,9 @@ export class CreateLocalisationDto {
     @ApiProperty()
     long: number;
 
-    @ApiProperty({ required: false, nullable: true })
+    @ApiProperty({ required: false })
     idTuteur: number | null;
 
-    @ApiProperty({ required: false, nullable: true })
+    @ApiProperty({ required: false })
     idProf: number | null;
 }

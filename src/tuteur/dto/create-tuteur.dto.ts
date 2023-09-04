@@ -30,6 +30,6 @@ export class CreateTuteurDto {
     @ApiProperty()
     relationEleve: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: false })
     idLocalisation: number;
 }

@@ -24,8 +24,7 @@ model Prof {
   Enseigner      Enseigner[]
   Maitriser      Maitriser[]
   Contacter      Contacter[]
-  localisation   Localisation[]
-  idLocalisation Int
+  localisation   Localisation?
 }
 
 
@@ -40,8 +39,7 @@ model Tuteur {
   Solliciter     Solliciter[]
   Contacter      Contacter[]
   eleve          Eleve[]
-  localisation   Localisation[]
-  idLocalisation Int
+  localisation   Localisation?
 }
 
 model Eleve {
@@ -72,9 +70,9 @@ model Localisation {
   lat            Int
   long           Int
   tuteur         Tuteur @relation(fields: [idTuteur], references: [id])
-  idTuteur       Int
+  idTuteur       Int    @unique
   prof           Prof @relation(fields: [idProf], references: [id])
-  idProf         Int
+  idProf         Int  @unique
 }
 
 model Solliciter {

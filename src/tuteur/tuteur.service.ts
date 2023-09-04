@@ -2,13 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { CreateTuteurDto } from './dto/create-tuteur.dto';
 import { UpdateTuteurDto } from './dto/update-tuteur.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import * as bcrypt from 'bcrypt';
+
+export const roundsOfHashing = 10
 
 @Injectable()
 export class TuteurService {
   constructor(private prisma: PrismaService) {}
 
-  create(createTuteurDto: CreateTuteurDto) {
-    return this.prisma.tuteur.create({ data: createTuteurDto});;
+  async create(createTuteurDto: CreateTuteurDto) {
+    const hashedPassword = await bcrypt.hash(
+      createTuteurDto.password,
+      roundsOfHashing,
+    );
+    createTuteurDto.password = hashedPassword
+    return this.prisma.tuteur.create({ data: createTuteurDto});
   }
 
   findAll() {
@@ -23,11 +31,14 @@ export class TuteurService {
       }});
   }
 
-  update(id: number, updateTuteurDto: UpdateTuteurDto) {
-    return this.prisma.tuteur.update({
-      where: { id },
-      data: updateTuteurDto,
-    });
+  async update(id: number, updateTuteurDto: UpdateTuteurDto) {
+    if (updateTuteurDto.password) {
+      updateTuteurDto.password = await bcrypt.hash(
+        updateTuteurDto.password,
+        roundsOfHashing,
+      );
+    }
+    return this.prisma.tuteur.findUnique({ where: { id }});
   }
 
   remove(id: number) {
