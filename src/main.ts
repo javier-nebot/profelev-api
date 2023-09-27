@@ -3,27 +3,31 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { PrismaClientExceptionFilter } from './prisma-client-exception/prisma-client-exception.filter';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors()
+
   app.useGlobalPipes(new ValidationPipe({whitelist: true}));
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
-  const config = new DocumentBuilder()
+  const configService = app.get(ConfigService)
+  const confinSwagger= new DocumentBuilder()
     .setTitle('ProfElev')
     .setDescription('The ProfElev API description')
     .setVersion('0.1')
     .addBearerAuth()
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, confinSwagger);
   SwaggerModule.setup('api', app, document);
 
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
   
-  await app.listen(3000);
+  await app.listen(configService.get<number>('SERVER_PORT'));
 }
 bootstrap();
 
