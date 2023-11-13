@@ -11,6 +11,7 @@ async function bootstrap() {
   app.enableCors()
 
   app.useGlobalPipes(new ValidationPipe({whitelist: true}));
+  //whitelist: only email and password from authdto
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   const configService = app.get(ConfigService)

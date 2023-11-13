@@ -1,0 +1,78 @@
+@startuml
+
+class Matieres {
+  +idMatiere: INT
+  +matiere: VARCHAR(50)
+  +cours: VARCHAR(50)
+}
+
+class Localisation {
+  +idLocalisation: VARCHAR(50)
+  +ville: VARCHAR(50)
+  +adresse: VARCHAR(50)
+  +departement: VARCHAR(50)
+  +codePostal: VARCHAR(50)
+  +Latitud: DECIMAL(3,3)
+  +Longitude: DECIMAL(3,3)
+}
+
+class Prof {
+  +idProf: INT
+  +nomProf: VARCHAR(50)
+  +prenomProf: VARCHAR(50)
+  +diplomeProf: VARCHAR(50)
+  +ageProf: INT
+  +telephoneProf: INT
+  +mailProf: VARCHAR(50)
+  +password: VARCHAR(50)
+}
+
+class Tuteur {
+  +idTuteur: INT
+  +nomTuteur: VARCHAR(50)
+  +prenomTuteur: VARCHAR(50)
+  +telephoneTuteur: INT
+  +mailTuteur: VARCHAR(50)
+  +password: VARCHAR(50)
+  +relationAvecEleve: VARCHAR(50)
+}
+
+class Eleve {
+  +idEleve: INT
+  +nomEleve: VARCHAR(50)
+  +prenomEleve: VARCHAR(50)
+  +ageEleve: INT
+}
+
+class Solliciter {
+  +idTuteur: INT
+  +idMatiere: INT
+}
+
+class Enseigner {
+  +idProf: INT
+  +idEleve: INT
+  +idMatiere: INT
+  +rendezvous: DATETIME
+}
+
+class Maitriser {
+  +idProf: INT
+  +idMatiere: INT
+}
+
+class Contacter {
+  +idProf: INT
+  +idTuteur: INT
+}
+
+Matieres --o{ Solliciter
+Localisation "1" --o{ Prof
+Localisation "1" --o{ Tuteur
+Tuteur --o{ Eleve
+Tuteur --o{ Solliciter
+Prof --o{ Enseigner
+Prof --o{ Maitriser
+Prof --o{ Contacter
+
+@enduml

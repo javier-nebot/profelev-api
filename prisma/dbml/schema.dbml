@@ -1,0 +1,136 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Prof {
+  id Int [pk, increment]
+  nom String [not null]
+  prenom String [not null]
+  diplome String [not null]
+  age Int [not null]
+  telephone String [unique, not null]
+  email String [unique, not null]
+  password String [not null]
+  Enseigner Enseigner [not null]
+  Maitriser Maitriser [not null]
+  Contacter Contacter [not null]
+  localisation Localisation
+}
+
+Table Tuteur {
+  id Int [pk, increment]
+  nom String [not null]
+  prenom String [not null]
+  telephone String [unique, not null]
+  email String [unique, not null]
+  password String [not null]
+  relationEleve String [not null]
+  Solliciter Solliciter [not null]
+  Contacter Contacter [not null]
+  eleve Eleve [not null]
+  localisation Localisation
+}
+
+Table Eleve {
+  id Int [pk, increment]
+  nom String [not null]
+  prenom String [not null]
+  age Int [not null]
+  Enseigner Enseigner [not null]
+  tuteur Tuteur [not null]
+  idTuteur Int [not null]
+}
+
+Table Matiere {
+  id Int [pk, increment]
+  matiere String [not null]
+  cours String [not null]
+  Solliciter Solliciter [not null]
+  Enseigner Enseigner [not null]
+  Maitriser Maitriser [not null]
+}
+
+Table Localisation {
+  id Int [pk, increment]
+  adresse String [not null]
+  ville String [not null]
+  departement String [unique, not null]
+  codePostal String [unique, not null]
+  lat Int [not null]
+  long Int [not null]
+  tuteur Tuteur [not null]
+  idTuteur Int [unique, not null]
+  prof Prof [not null]
+  idProf Int [unique, not null]
+}
+
+Table Solliciter {
+  tuteur Tuteur [not null]
+  idTuteur Int [not null]
+  matiere Matiere [not null]
+  idMatiere Int [not null]
+
+  indexes {
+    (idTuteur, idMatiere) [pk]
+  }
+}
+
+Table Enseigner {
+  prof Prof [not null]
+  idProf Int [not null]
+  eleve Eleve [not null]
+  idEleve Int [not null]
+  matiere Matiere [not null]
+  idMatiere Int [not null]
+  rendezvous DateTime [not null]
+
+  indexes {
+    (idProf, idEleve, idMatiere) [pk]
+  }
+}
+
+Table Maitriser {
+  prof Prof [not null]
+  idProf Int [not null]
+  matiere Matiere [not null]
+  idMatiere Int [not null]
+
+  indexes {
+    (idProf, idMatiere) [pk]
+  }
+}
+
+Table Contacter {
+  prof Prof [not null]
+  idProf Int [not null]
+  tuteur Tuteur [not null]
+  idTuteur Int [not null]
+
+  indexes {
+    (idProf, idTuteur) [pk]
+  }
+}
+
+Ref: Eleve.idTuteur > Tuteur.id
+
+Ref: Localisation.idTuteur - Tuteur.id
+
+Ref: Localisation.idProf - Prof.id
+
+Ref: Solliciter.idTuteur > Tuteur.id
+
+Ref: Solliciter.idMatiere > Matiere.id
+
+Ref: Enseigner.idProf > Prof.id
+
+Ref: Enseigner.idEleve > Eleve.id
+
+Ref: Enseigner.idMatiere > Matiere.id
+
+Ref: Maitriser.idProf > Prof.id
+
+Ref: Maitriser.idMatiere > Matiere.id
+
+Ref: Contacter.idProf > Prof.id
+
+Ref: Contacter.idTuteur > Tuteur.id

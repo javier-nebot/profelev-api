@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { AuthEntity } from './entity/auth.entity';
-import { AuthDto } from './dto/auth.dto';
+import { AuthDto } from './dto';
 import { CreateProfDto } from 'src/prof/dto/create-prof.dto';
 import { CreateTuteurDto } from 'src/tuteur/dto/create-tuteur.dto';
 
